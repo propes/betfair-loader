@@ -43,7 +43,7 @@ namespace app.lib
                 }
 
                 // Add the document if it doesn't already exist
-                if (checkForDuplicates && _collection.CountDocuments(document) == 0)
+                if (!checkForDuplicates || _collection.CountDocuments(document) == 0)
                 {
                     try
                     {
