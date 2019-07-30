@@ -1,0 +1,5 @@
+foo
+{"op":"mcm","clk":"3641401817","pt":1483133956012,"mc":[{"id":"1.128941999","marketDefinition":{"bspMarket":false,"turnInPlayEnabled":true,"persistenceEnabled":true,"marketBaseRate":5.0,"eventId":"28062914","eventTypeId":"6423","numberOfWinners":1,"bettingType":"ODDS","marketType":"MATCH_ODDS","marketTime":"2016-12-31T01:00:00.000Z","suspendTime":"2016-12-31T01:00:00.000Z","bspReconciled":false,"complete":true,"inPlay":false,"crossMatching":false,"runnersVoidable":false,"numberOfActiveRunners":2,"betDelay":0,"status":"OPEN","runners":[{"status":"ACTIVE","sortPriority":1,"id":484729,"name":"Michigan"},{"status":"ACTIVE","sortPriority":2,"id":484734,"name":"Florida State"}],"regulators":["MR_INT"],"countryCode":"US","discountAllowed":true,"timezone":"GMT","openDate":"2016-12-31T01:00:00.000Z","version":1524375858,"name":"Moneyline","eventName":"Michigan v Florida State"}}]}
+{"foo":bar}
+baz baz
+{"op":"mcm","clk":"3641429548","pt":1483134844590,"mc":[{"id":"1.128941999","rc":[{"ltp":3.1,"id":484734}]}]}
