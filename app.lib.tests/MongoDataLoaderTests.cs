@@ -67,6 +67,26 @@ namespace app.lib.tests
             Assert.Equal(3, _fixture.Logger.DuplicateCount);
         }
 
+        [Fact]
+        public void LoadFile_LogsRecords()
+        {
+            var sut = _fixture.CreateSut();
+
+            sut.LoadFile("TestData/valid.txt");
+
+            Assert.Equal(5, _fixture.Logger.RecordCount);
+        }
+
+        [Fact]
+        public void LoadFile_LogsSuccessfulRecords()
+        {
+            var sut = _fixture.CreateSut();
+
+            sut.LoadFile("TestData/invalid.txt");
+
+            Assert.Equal(2, _fixture.Logger.SuccessCount);
+        }
+
         public void Dispose()
         {
             _fixture.Dispose();

@@ -31,6 +31,8 @@ namespace app.lib
             var lines = File.ReadAllLines(filePath);
             for (var i = 0; i < lines.Length; i++)
             {
+                _logger.LogRecord();
+
                 BsonDocument document = null;
                 try
                 {
@@ -48,6 +50,7 @@ namespace app.lib
                     try
                     {
                         _collection.InsertOne(document);
+                        _logger.LogSuccess();
                     }
                     catch (Exception ex)
                     {

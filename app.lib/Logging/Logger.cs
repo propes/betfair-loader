@@ -18,6 +18,10 @@ namespace app.lib.Logging
                 .Select(m => m.Message)
                 .ToList();
 
+        public int RecordCount { get; private set; }
+
+        public int SuccessCount { get; private set; }
+
         public void LogError(string message)
         {
             _messages.Add(new LogMessage(LogMessageType.Error, message));
@@ -26,6 +30,16 @@ namespace app.lib.Logging
         public void LogDuplicate(string message)
         {
             _messages.Add(new LogMessage(LogMessageType.Duplicate, message));
+        }
+
+        public void LogRecord()
+        {
+            RecordCount++;
+        }
+
+        public void LogSuccess()
+        {
+            SuccessCount++;
         }
     }
 }

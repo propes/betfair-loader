@@ -7,5 +7,7 @@ namespace app.lib.Logging
         void LogError(string message);
 
         void LogDuplicate(string message);
+        void LogRecord();
+        void LogSuccess();
     }
 }

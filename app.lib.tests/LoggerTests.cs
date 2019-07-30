@@ -54,5 +54,29 @@ namespace app.lib.tests
 
             Assert.Equal(2, sut.Duplicates.Count());
         }
+
+        [Fact]
+        public void LogRecord_IncrementsRecordCount()
+        {
+            var sut = new Logger();
+
+            sut.LogRecord();
+            sut.LogRecord();
+            sut.LogRecord();
+
+            Assert.Equal(3, sut.RecordCount);
+        }
+
+        [Fact]
+        public void LogSuccess_IncrementsSuccessCount()
+        {
+            var sut = new Logger();
+
+            sut.LogSuccess();
+            sut.LogSuccess();
+            sut.LogSuccess();
+
+            Assert.Equal(3, sut.SuccessCount);
+        }
     }
 }

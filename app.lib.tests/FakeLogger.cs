@@ -5,7 +5,9 @@ namespace app.lib.tests
     public class FakeLogger : ILogger
     {
         public int ErrorCount { get; private set; }
-        public int DuplicateCount { get; internal set; }
+        public int DuplicateCount { get; private set; }
+        public int RecordCount { get; private set; }
+        public int SuccessCount { get; internal set; }
 
         public void LogDuplicate(string message)
         {
@@ -15,6 +17,16 @@ namespace app.lib.tests
         public void LogError(string message)
         {
             ErrorCount++;
+        }
+
+        public void LogRecord()
+        {
+            RecordCount++;
+        }
+
+        public void LogSuccess()
+        {
+            SuccessCount++;
         }
     }
 }

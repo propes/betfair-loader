@@ -38,9 +38,11 @@ namespace app.console
                 loader.LoadFile(files[i], false);
             }
 
-            Console.WriteLine($"Finished reading {files.Length} files");
-            Console.WriteLine($"{logger.Errors.Count()} errors");
-            Console.WriteLine($"{logger.Duplicates.Count()} duplicates");
+            Console.WriteLine($"Finished reading {files.Length:n0} files");
+            Console.WriteLine($"{logger.RecordCount:n0} records processed");
+            Console.WriteLine($"{logger.SuccessCount:n0} successful");
+            Console.WriteLine($"{logger.Errors.Count():n0} errors");
+            Console.WriteLine($"{logger.Duplicates.Count():n0} duplicates");
         }
     }
 }
