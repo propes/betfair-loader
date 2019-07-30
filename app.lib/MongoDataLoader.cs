@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using app.lib.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -13,14 +14,14 @@ namespace app.lib
         private readonly ILogger _logger;
 
         public MongoDataLoader(
-            IMongoDatabase database,
+            IMongoCollection<BsonDocument> collection,
             ILogger logger)
         {
-            _collection = database.GetCollection<BsonDocument>(CollectionName);
+            _collection = collection;
             _logger = logger;
         }
 
-        public void LoadFile(string filePath)
+        public void LoadFile(string filePath, bool checkForDuplicates = true)
         {
             if (!File.Exists(filePath))
             {
@@ -41,13 +42,21 @@ namespace app.lib
                     continue;
                 }
 
-                try
+                // Add the document if it doesn't already exist
+                if (checkForDuplicates && _collection.CountDocuments(document) == 0)
                 {
-                    _collection.InsertOne(document);
+                    try
+                    {
+                        _collection.InsertOne(document);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError($"{filePath}: line {i}: Error inserting document: {ex.Message}");
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    _logger.LogError($"{filePath}: line {i}: Error inserting document: {ex.Message}");
+                    _logger.LogDuplicate($"{filePath}: line {i}: Duplicate record");
                 }
             }
         }

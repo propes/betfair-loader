@@ -22,7 +22,7 @@ namespace app.lib.tests
 
             sut.LoadFile("TestData/valid.txt");
 
-            Assert.Equal(215, _fixture.CountRecords());
+            Assert.Equal(5, _fixture.CountRecords());
         }
 
         [Fact]
@@ -43,6 +43,28 @@ namespace app.lib.tests
             sut.LoadFile("TestData/invalid.txt");
 
             Assert.Equal(2, _fixture.CountRecords());
+        }
+
+        [Fact]
+        public void LoadFile_GivenLineIsAlreadyInDatabase_DoNotLoadLine()
+        {
+            var sut = _fixture.CreateSut();
+
+            sut.LoadFile("TestData/valid.txt");
+            sut.LoadFile("TestData/dupes.txt");
+
+            Assert.Equal(7, _fixture.CountRecords());
+        }
+
+        [Fact]
+        public void LoadFile_GivenLineIsAlreadyInDatabase_LogDuplicate()
+        {
+            var sut = _fixture.CreateSut();
+
+            sut.LoadFile("TestData/valid.txt");
+            sut.LoadFile("TestData/dupes.txt");
+
+            Assert.Equal(3, _fixture.Logger.DuplicateCount);
         }
 
         public void Dispose()

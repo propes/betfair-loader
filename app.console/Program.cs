@@ -2,33 +2,45 @@
 using System.IO;
 using System.Linq;
 using app.lib;
+using app.lib.Logging;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace app.console
 {
     class Program
     {
-        private static readonly string DataDirectory = "/home/james/code/betfair/out";
-
         static void Main(string[] args)
         {
-            if (!Directory.Exists(DataDirectory))
+            var directoryPath = args[0];
+
+            if (string.IsNullOrWhiteSpace(directoryPath))
             {
-                throw new Exception("Data directory is invalid");
+                Console.WriteLine("Please provide a directory for data files");
+            }
+
+            if (!Directory.Exists(directoryPath))
+            {
+                Console.WriteLine("Directory specified does not exist");
+                return;
             }
 
             var database = new MongoClient().GetDatabase("betfair");
+            var collection = database.GetCollection<BsonDocument>("points");
             var logger = new Logger();
-            var loader = new MongoDataLoader(database, logger);
 
-            foreach (var file in Directory.GetFiles(DataDirectory))
+            var loader = new MongoDataLoader(collection, logger);
+
+            var files = Directory.GetFiles(directoryPath);
+            for (var i = 0; i < files.Length; i++)
             {
-                Console.WriteLine($"Reading file {file}");
-                loader.LoadFile(file);
+                Console.WriteLine($"Reading file {i+1}/{files.Length}: {files[i]}");
+                loader.LoadFile(files[i], false);
             }
 
-            Console.WriteLine("Finished reading all files");
-            Console.WriteLine($"There were {logger.Errors.Count()} errors");
+            Console.WriteLine($"Finished reading {files.Length} files");
+            Console.WriteLine($"{logger.Errors.Count()} errors");
+            Console.WriteLine($"{logger.Duplicates.Count()} duplicates");
         }
     }
 }

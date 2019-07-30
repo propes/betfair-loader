@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 
-namespace app.lib
+namespace app.lib.Logging
 {
     public interface ILogger
     {
-        IList<string> Errors { get; }
         void LogError(string message);
+
+        void LogDuplicate(string message);
     }
 }

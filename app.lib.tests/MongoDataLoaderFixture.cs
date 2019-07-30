@@ -9,6 +9,7 @@ namespace app.lib.tests
         private const string CollectionName = "points";
         private readonly MongoClient _client;
         private readonly IMongoDatabase _database;
+        private readonly IMongoCollection<BsonDocument> _collection;
         
         public FakeLogger Logger { get; private set; }
 
@@ -16,12 +17,13 @@ namespace app.lib.tests
         {
             _client = new MongoClient();
             _database = _client.GetDatabase(TestDbName);
+            _collection = _database.GetCollection<BsonDocument>(CollectionName);
             Logger = new FakeLogger();
         }
 
         public MongoDataLoader CreateSut()
         {
-            return new MongoDataLoader(_database, Logger);
+            return new MongoDataLoader(_collection, Logger);
         }
 
         public long CountRecords()
